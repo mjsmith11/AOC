@@ -13,6 +13,23 @@ namespace _2017
             Console.WriteLine(day2(@"C: \\Users\\mjsmi\\source\\repos\AOC\2017\\inputs\\day2.txt"));
             Console.Read();
         }
+		
+		public static int day1(string input)
+        {
+            int sum=0;
+            for (int i = 0; i < input.Length; i++)
+            {
+                //int i2 = i + 1;
+                int i2 = i + input.Length / 2;
+                if (i2 >= input.Length)
+                    i2 -= input.Length;
+                if(input[i]==input[i2])
+                {
+                    sum += int.Parse(input[i].ToString());
+                }
+            }
+            return sum;
+        }
 
         public static int day2(string filename)
         {
