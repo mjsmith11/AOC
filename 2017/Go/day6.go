@@ -11,7 +11,6 @@ func day6() int {
 	cycle := 0
 
 	for {
-		fmt.Println(join(memory, ","))
 		max, loc := findMax(memory)
 		memory[loc] = 0
 		index := loc + 1
