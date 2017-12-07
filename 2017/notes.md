@@ -7,3 +7,5 @@
 | 3   | Pen & Paper + Excel (not committed) |
 | 4   | Go                                  |
 | 5   | Go                                  |
+| 6   | Go                                  |
+| 7   | Go                                  |
