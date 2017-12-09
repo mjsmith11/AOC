@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io/ioutil"
+)
 
 func main() {
-	fmt.Println(day8())
+	dat, _ := ioutil.ReadFile("day9input.txt")
+	fmt.Println(scoreGroup(string(dat)))
 }
