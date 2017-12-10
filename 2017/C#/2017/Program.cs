@@ -10,7 +10,7 @@ namespace _2017
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(day2(@"C: \\Users\\mjsmi\\source\\repos\AOC\2017\\inputs\\day2.txt"));
+            Console.WriteLine(Day10.part2());
             Console.Read();
         }
 		
