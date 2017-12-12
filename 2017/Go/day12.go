@@ -6,7 +6,23 @@ import (
 	"strings"
 )
 
+var allTimeNodes map[int]string
+
+func countGroups() int {
+	nodes, edges := createGraph()
+	groups := 0
+	for _, v := range nodes {
+		if _, seenAllTime := allTimeNodes[v]; !seenAllTime {
+			traverse(v, nodes, edges)
+			groups++
+		}
+	}
+	return groups
+}
 func traverse(start int, nodes []int, edges map[int][]int) int {
+	if allTimeNodes == nil {
+		allTimeNodes = make(map[int]string, len(nodes))
+	}
 	queue := NewQueue(50)
 	visited := make(map[int]string, 1000)
 	seen := make(map[int]string, 1000)
@@ -25,6 +41,7 @@ func traverse(start int, nodes []int, edges map[int][]int) int {
 		}
 
 		visited[value] = ""
+		allTimeNodes[value] = ""
 		currentNode = queue.Pop()
 	}
 
