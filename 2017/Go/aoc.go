@@ -1,9 +1,8 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func main() {
-	fmt.Println(day11())
+	nodes, edges := createGraph()
+	fmt.Println(traverse(0, nodes, edges))
 }
