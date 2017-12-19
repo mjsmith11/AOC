@@ -35,9 +35,9 @@ namespace _2017
             return myHash[0] * myHash[1];
         }
 
-        public static string part2()
+        public static string part2(string input)
         {
-            string input = "165,1,255,31,87,52,24,113,0,91,148,254,158,2,73,153";
+            //string input = "165,1,255,31,87,52,24,113,0,91,148,254,158,2,73,153";
             byte[] inpBytes = Encoding.ASCII.GetBytes(input);
             byte[] appendedInp = new byte[inpBytes.Length + 5]; 
             for (int i = 0; i < inpBytes.Length; i++)
