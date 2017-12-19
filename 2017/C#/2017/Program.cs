@@ -10,7 +10,7 @@ namespace _2017
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(Day16.part2());
+            Console.WriteLine(Day17.part2(355));
             Console.Read();
         }
 		
