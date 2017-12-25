@@ -5,18 +5,28 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 )
 
-func execute(inst []string, pid int) {
+func execute(inst []string, pid int, in, out chan int) (valuesSent int) {
+	fmt.Println("Running " + strconv.Itoa(pid))
 	pc := 0
 	reg := make(map[string]int, 26)
 	reg["p"] = pid
-	lastFreq := -1
+	valuesSent = 0
 	for pc >= 0 && pc < len(inst) {
 		parts := strings.Split(inst[pc], " ")
 		if parts[0] == "snd" {
-			fmt.Println(strconv.Itoa(pid) + " Sound " + strconv.Itoa(getValue(reg, parts[1])))
-			lastFreq = getValue(reg, parts[1])
+			/*out <- getValue(reg, parts[1])
+			valuesSent++
+			fmt.Println(strconv.Itoa(pid) + " has sent " + strconv.Itoa(valuesSent) + " " + strconv.Itoa(getValue(reg, parts[1])))*/
+			select {
+			case out <- getValue(reg, parts[1]):
+				fmt.Println("send", getValue(reg, parts[1]), "from", pid)
+				valuesSent++
+			case <-time.After(1 * time.Second):
+				return
+			}
 		} else if parts[0] == "set" {
 			reg[parts[1]] = getValue(reg, parts[2])
 		} else if parts[0] == "add" {
@@ -26,8 +36,15 @@ func execute(inst []string, pid int) {
 		} else if parts[0] == "mod" {
 			reg[parts[1]] = getValue(reg, parts[1]) % getValue(reg, parts[2])
 		} else if parts[0] == "rcv" {
-			if getValue(reg, parts[1]) != 0 {
-				fmt.Println(strconv.Itoa(pid) + " Recover " + strconv.Itoa(lastFreq))
+			/*val := <-in
+			reg[parts[1]] = val
+			fmt.Println(strconv.Itoa(pid) + " Received " + strconv.Itoa(val))*/
+			select {
+			case reg[parts[1]] = <-in:
+				fmt.Println("got", getValue(reg, parts[1]), "at", pid)
+
+			case <-time.After(1 * time.Second):
+				return
 			}
 		} else if parts[0] == "jgz" {
 			if getValue(reg, parts[1]) > 0 {
@@ -39,9 +56,11 @@ func execute(inst []string, pid int) {
 		}
 		pc++
 	}
+	return
 }
 
 func getValue(reg map[string]int, s string) int {
+	s = strings.TrimSpace(s)
 	if value, err := strconv.Atoi(s); err == nil {
 		return value
 	}
