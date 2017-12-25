@@ -1,6 +1,8 @@
 package main
 
+import "fmt"
+
 func main() {
-	d19part1()
+	fmt.Println(part1())
 
 }
