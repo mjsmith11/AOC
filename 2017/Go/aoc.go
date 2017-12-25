@@ -4,5 +4,6 @@ import "fmt"
 
 func main() {
 
-	fmt.Println(countGroups())
+	fmt.Println(getInst())
+	execute(getInst(), 0)
 }
