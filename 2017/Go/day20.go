@@ -22,6 +22,7 @@ type particle struct {
 	Position     *point3D
 	Velocity     *point3D
 	Acceleration *point3D
+	Destroyed    bool
 }
 
 func part1() int {
@@ -35,6 +36,51 @@ func part1() int {
 	}
 	return minInd
 
+}
+func d20part2() int {
+	arr := loadFromFile()
+	for i := 0; i < 100; i++ {
+		// update all
+		for _, v := range arr {
+			v.update()
+		}
+
+		//handle collisions
+		for k, v := range arr {
+			if !v.Destroyed {
+				for j := k + 1; j < len(arr); j++ {
+					if v.Position.equals(arr[j].Position) {
+						v.Destroyed = true
+						arr[j].Destroyed = true
+					}
+				}
+			}
+		}
+
+	}
+
+	count := 0
+	for _, v := range arr {
+		if !v.Destroyed {
+			count++
+		}
+	}
+	return count
+}
+
+func (p1 point3D) equals(p2 *point3D) bool {
+	return (p1.X == p2.X) && (p1.Y == p2.Y) && (p1.Z == p2.Z)
+}
+func (p *particle) update() {
+	if !p.Destroyed {
+		p.Velocity.X += p.Acceleration.X
+		p.Velocity.Y += p.Acceleration.Y
+		p.Velocity.Z += p.Acceleration.Z
+
+		p.Position.X += p.Velocity.X
+		p.Position.Y += p.Velocity.Y
+		p.Position.Z += p.Velocity.Z
+	}
 }
 
 func (p1 particle) isLessThan(p2 *particle) bool {
@@ -111,6 +157,8 @@ func parseLine(num int, line string) *particle {
 	a.Y, _ = strconv.Atoi(acoords[1])
 	a.Z, _ = strconv.Atoi(acoords[2])
 	part.Acceleration = a
+
+	part.Destroyed = false
 
 	return part
 }

@@ -3,6 +3,6 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(part1())
+	fmt.Println(d20part2())
 
 }
