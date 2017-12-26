@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"math/big"
 	"strconv"
 	"strings"
 )
@@ -41,6 +42,20 @@ func getValue23(reg map[string]int, s string) int {
 		return value
 	}
 	return 0
+}
+
+func day23Part2() int {
+	var num int64
+	num = 108400
+	composites := 0
+	for i := 0; i < 1001; i++ {
+		n := big.NewInt(num)
+		if !n.ProbablyPrime(4) {
+			composites++
+		}
+		num += 17
+	}
+	return composites
 }
 
 func getInst23() []string {
