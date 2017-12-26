@@ -3,6 +3,6 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(day23Part2())
+	fmt.Println(day24Part1())
 
 }
