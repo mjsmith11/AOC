@@ -17,13 +17,22 @@ type component struct {
 	used  bool
 }
 
-var max int
+var maxStrength int
+var maxLength int
 
 func day24Part1() int {
 	components := day24readFile()
-	max = 0
+	maxStrength = 0
 	buildChain(components, 0)
-	return max
+	return maxStrength
+}
+
+func day24Part2() int {
+	components := day24readFile()
+	maxStrength = 0
+	maxLength = 0
+	buildChain2(components, 0)
+	return maxStrength
 }
 
 func buildChain(components []*component, need int) {
@@ -52,8 +61,47 @@ func buildChain(components []*component, need int) {
 				weight += v.port2
 			}
 		}
-		if weight > max {
-			max = weight
+		if weight > maxStrength {
+			maxStrength = weight
+		}
+	}
+
+}
+
+func buildChain2(components []*component, need int) {
+	addedALink := false
+	for k, v := range components {
+		if (v.port1 == need || v.port2 == need) && !v.used {
+			addedALink = true
+			components[k].used = true
+			var next int
+			if v.port1 == need {
+				next = v.port2
+			} else {
+				next = v.port1
+			}
+			buildChain2(components, next)
+
+			components[k].used = false
+		}
+	}
+
+	if !addedALink {
+		weight := 0
+		length := 0
+		for _, v := range components {
+			if v.used {
+				weight += v.port1
+				weight += v.port2
+				length++
+			}
+		}
+
+		if length > maxLength {
+			maxLength = length
+			maxStrength = weight
+		} else if length == maxLength && weight > maxStrength {
+			maxStrength = weight
 		}
 	}
 
