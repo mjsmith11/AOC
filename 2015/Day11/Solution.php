@@ -1,6 +1,7 @@
 <?php
 
     // cqjxjnds
+    // a=0, b=1, c=2....
     $input = array(18, 3, 13, 9, 23, 9, 16, 2);
     $pass = increment($input);
     while (!containsStraight($pass) || !twoPairs($pass) || containsBannedChars($pass)) {
