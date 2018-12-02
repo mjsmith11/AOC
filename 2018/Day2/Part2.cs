@@ -1,0 +1,292 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string input = @"kqzxdenujwcsthbzgvyioflcsp
+vqwxdenujwcsthbmggyioflarp
+kqzxienujwcsthbmglyioclarp
+kuzxdetujwcsthbmgvyioflcrp
+kqnxdenujwcsthbmgvlooflarp
+kqzxdknpjwcsthwmgvyioflarp
+kgzxdenujwcsthbfgvyicflarp
+kqzxdenujrnsthbmgjyioflarp
+lqzxdeeujwcsthbmrvyioflarp
+iqfxdenujwcsthbmgvyiofyarp
+kvzxbenujwcstabmgvyioflarp
+kmzxdenujwcsthbmglyioolarp
+kqzxdenujhcsthbmgbyioflanp
+nqzxdenujwcsehbmgvsioflarp
+kqzlgenujwcsthbmgvyiofjarp
+kqzxdyfujwcsihbmgvyioflarp
+kqzxdsnujwcqthbmgvyiorlarp
+kqzxdenuywcsthbmgvyinflmrp
+knzxderujwcsthbmgvyioflaop
+kqxxdenujwczthbmgvyioflajp
+kqzxdevujwcsthbmgvyqoxlarp
+kqzxdenujwclmhbmgvyioslarp
+kqzldenujwcsthbmgvnisflarp
+kjtxdenujwcsthbmgvyfoflarp
+kqzxwenujwcstxbmgvyihflarp
+kqzxdenuhecsthbmgvyeoflarp
+kqzxdenhjwesthbmgvyioklarp
+kqkxdenujwcsthbcgvyiofgarp
+kqyxmenujwcsthbmgvyioflara
+kqzxdqnrjwcwthbmgvyioflarp
+kqzxdenufwcgyhbmgvyioflarp
+lqzxdenujwcsthbmtvyiofearp
+kqzxdenujwcsthbvgvthoflarp
+kqzxeenujwcsahbmgvyioflamp
+pqzxdenujwcsshbmjvyioflarp
+kqzxdesujwcstdbmgvyioflatp
+kqzxpenujwcsthimgvyioflhrp
+kqzxdmkujwcsthbmgvpioflarp
+kszxdenujwcsthbybvyioflarp
+kqzxdvnujwcsthbmgvyqoslarp
+kkzxdetujwcsthbmgvyiofltrp
+kqzxdenujwcsthomgvyiozlaro
+cqzfdenubwcsthbmgvyioflarp
+kqzxdenyjwcsthbmhvyiofldrp
+kqzxdenujwcsthbmghfiofxarp
+kmqxdebujwcsthbmgvyioflarp
+kqzxdenufwcsthbmvvypoflarp
+kqnxdenujwcsthbmgvtzoflarp
+bqzxdenujwcithbmgvyiohlarp
+kqzxdenurwrsthbmgvyioelarp
+kqzxdenujwcsthbmgpyiodlarl
+kqzxdengjwcxthbmgvjioflarp
+kizxdenujwcsnhqmgvyioflarp
+jqzxdenajwcsthbmnvyioflarp
+kqzcdenujwcsphbigvyioflarp
+kezxdenujwcsthbfgvyioflaqp
+kqzxdenujwcstybmgvyivfyarp
+kqzxdenujwcsthbmgvbiofsnrp
+kqzxdenujwcsthbmgvyhxfnarp
+kvzxdenqjfcsthbmgvyioflarp
+kqzxywnljwcsthbmgvyioflarp
+kqzxdenujwcsbhbzgvyioxlarp
+kqkxdenufwcsthbmgvyiofxarp
+dqzxddnujwcsthsmgvyioflarp
+yqrxdenujwcsthbagvyioflarp
+kqzxdenujwcsajbmgvyiovlarp
+kqztdunujwcsthbmgvyioilarp
+kqzxdequjwcsthbmgvyyoflarm
+kqzxdlnujwksthbmgvkioflarp
+tqvxdenujwcsthbmgveioflarp
+kqzndezupwcsthbmgvyioflarp
+kqzctsnujwcsthbmgvyioflarp
+kqzxdenujwmstkbmgvyioflgrp
+kqzxdenujwzsthdmgvyiofdarp
+kqzxdynujwcsthcmgvyioflasp
+kqzxdesujwcstybmgcyioflarp
+kqzxdenujwcsthbvgvyiyglarp
+kqzxpenujwcsthbogvyioflard
+khzxdenujwcsthbmgvyikflaep
+kqzxdedujwchthbmgvyeoflarp
+kxzxsepujwcsthbmgvyioflarp
+xqzxdenujwcsthbpgvyioelarp
+jfzxdenujwcsthbmgvyiollarp
+kqzxcenujwcethbmgvwioflarp
+kqzxdenujwcithbmgvysoflarg
+kqlxdenujwnsthbmgvyiotlarp
+wqzydenujwcsthbmgvyioftarp
+kqzxienuwwcsthbmgayioflarp
+kqzxdetujwcsthbmgvyhoflawp
+kqzxdqnujwrsthbmgvyxoflarp
+kqzxdenujwcvthbmgjiioflarp
+kqzxdenujwcjthbxgvaioflarp
+kqzxpenujwcsthymgvyioklarp
+kqzxdenujwcsthbmswygoflarp
+kqzxdenujwcsthbmgvyiaxiarp
+kqzxdenudkcsthbmgvyzoflarp
+kqzxdvndjwcsthbmgvyioflaxp
+kqzxdenujwcsthbmdvymoflvrp
+kqzxvenujwcsihbmgvyiofllrp
+kqzxdqnujwcsthbmgtyioflprp
+kqzxdenuuwcathbmgvsioflarp
+kqzrdenujwesthbjgvyioflarp
+kqzxdexujwcstzbmgvyyoflarp
+kqzxpenujwjstabmgvyioflarp
+kozxdenejwcsthbmgvpioflarp
+kbzxdenvjwcsthbmgvyiofsarp
+kolxdenujwcjthbmgvyioflarp
+kqzxdenujwcsthbmgvyiffsakp
+kqzxdelujwcsthbmlvyioflxrp
+kqzxdenugwcsthrmgvyioflprp
+kqzxdelujwcsthqmgvyiozlarp
+kqzxienujwosthbmgvykoflarp
+kqzxdeuujwicthbmgvyioflarp
+kqzxdenbjwcsthbmcvyaoflarp
+krzxdqnujwcsthbmgvyioflerp
+wqzxzenujwcsthbmgvyioclarp
+kqzxyenujwcsthbmgejioflarp
+kqzxdenujwcstsbmgvtidflarp
+kqnxdenejwcsthbmgvyioflara
+kqzsdmnujwcsthbmgvyioflaep
+kqzxdedujwnsthymgvyioflarp
+kqzxdenujwusthbmgnyioflarx
+kqzxlenujwcsthbmgayvoflarp
+kqzxdenujwcsthbmgvyiofngrh
+zqzxdenujwcsthbmgvyiofvxrp
+kqzydenujwmsthbmgvyiuflarp
+kqzxdenujkrsthbmdvyioflarp
+kqzxdlnujocsthbmgvyiofaarp
+kqzxdenujwcstybmgvyiofrwrd
+kqzxdenupwksthbmgvyiofbarp
+khzxdentjwcsthbmbvyioflarp
+kqzxdenujwcuphbmgvyihflarp
+kqzxdenhjwcgthbmgvyioflrrp
+kqzxdenujwcsthbmgvyiofakhp
+kqzxdenujwcstfkmgvyioflamp
+kqzxdenujqcsthbmgvkiorlarp
+kqzxdenujwcstvbmgvyioilasp
+kqzxdxnujwcsthbpgayioflarp
+kqzxdenupwysthbmgvyiofljrp
+kqzxdenujwcdthbmgvymoflarv
+kqnxdenujwcstvbmgvyixflarp
+kqjxdenujwcsthbmgvyikflurp
+kqsxdenulwcsthxmgvyioflarp
+bqzxbenujwcsahbmgvyioflarp
+vqzxdenujwcsthbmgvjzoflarp
+kqzhfenujwcsthimgvyioflarp
+eqzxdenujwcshhbmgnyioflarp
+kqzxdenujucstubmgvyicflarp
+kuzxdenuewcsthbmgvyiofuarp
+kqzxdenulwcsthbmgpyigflarp
+kqzxdebujwcsthbmgoyioflaro
+kqzxdenujwcuthbmgucioflarp
+kqzxdenujwcschpmgvyioflhrp
+kqzxfenujwcsthbmjvrioflarp
+kqzxdenujqcsthbmgvyndflarp
+kqzxdgnbjwcsthbmgvywoflarp
+kqzxdenujwcsthrmgtbioflarp
+yqzxdenyjwcsthbmgvyioflarg
+kqzxdenuxwxsthbmsvyioflarp
+kqzxdenujwcsthbugqyvoflarp
+qqzxdenujwcsahbmgoyioflarp
+kqsxdenudwcsthbmguyioflarp
+kqzxdenujwcstublgvyioflamp
+kqzxdemujwtstqbmgvyioflarp
+kqzxqvnajwcsthbmgvyioflarp
+kqzxoennjwcstbbmgvyioflarp
+kqzxfenujwcsthbmlvyioflwrp
+kqzjdunujwcsthhmgvyioflarp
+kqzxdenujwcqthbmgvyirfxarp
+kqzxdengjwcsthbmgvyiowlgrp
+kqgxdenujwcswhbmglyioflarp
+mqzxdekuuwcsthbmgvyioflarp
+kqzxdenujwdsthbmgbyiovlarp
+krzxdenlhwcsthbmgvyioflarp
+kqzxdenmjwcstqbmgvyioflanp
+kqzxdenujwcmthbmgvtioflyrp
+kqzxdenujwcsthbmgvaijflprp
+kqzxdenuywysqhbmgvyioflarp
+kqzxdenujwfsthbmgvyhoflark
+nqzcdefujwcsthbmgvyioflarp
+kqzxdenujrcsthgmgyyioflarp
+kqzxdqnujwzsthbmgvyioftarp
+kqzxdenujwcsthimgvyioolapp
+kqzxdenupwcsthbmggyioflyrp
+kqzxdjnujwcsthbvgvyioflarf
+kqzxdtnujwasthbmgvyiofuarp
+kqzxbensjzcsthbmgvyioflarp
+kqzxdenujwcsphbmwiyioflarp
+kqzgdenuowcsthbmgvyioflarh
+kmzxdenujwasthbmgvtioflarp
+kqzxdenujwcstybmgvyiofrard
+vqzxdenejwcsthbmglyioflarp
+kqhxdenujwcsmhbmgvyioflprp
+kqzxdnnujwcsthzsgvyioflarp
+kczxdenujwcsthbmgvyeoflaop
+kqzxdenujwcsxhbmgvaioflaap
+kqzxdenujwcsthbmgayiofnprp
+kqzxdvnujwcsthbmgvyipjlarp
+kqzxdenubwcskhbmgvyiofkarp
+kqzxdenujwcsthbgggyigflarp
+kqzxdenujncstabvgvyioflarp
+kqzxdenujwcstqimqvyioflarp
+kqzxeenujwcsdhbmgvyqoflarp
+kcpxdenujwcsthbmgvyioilarp
+kqwxuenujwcsthbmgvyiyflarp
+kqzxdwnujwcstgbmgvyioplarp
+kqzxdenuswcstvbmglyioflarp
+kqzxdenujwcsthabgvyiwflarp
+kqzxdpnujwcsthbmwvyiomlarp
+kqzxdenujwcdthbmgvcioffarp
+kqzxdenajwcsthbmtvyiofldrp
+kqzbnenujwcshhbmgvyioflarp
+kqzbdequiwcsthbmgvyioflarp
+kqzxdenuswcsohbmgzyioflarp
+kvzxdenujwcstdbmjvyioflarp
+kqzxoenujwcqthbmpvyioflarp
+kqzxhenujwcsthbmgoyiofoarp
+klzxdenujwczthbmgvyioflanp
+kqpxdenujwcsthbmgvyioflafz
+kqkxdenujwcstxbngvyioflarp
+kqzepenuxwcsthbmgvyioflarp
+bqzxdenujmcithbmgvyioflarp
+kdzxdjnujwcstnbmgvyioflarp
+kszxdenujwcsthbmgeyiofrarp
+kqzxdenijwcsthbmgvhiaflarp
+kqzadenujwcbtxbmgvyioflarp
+kqkxwenujwcsthbmgvyiowlarp
+pqzddenujwcsthbmgvyboflarp
+kqzxxenujwcsthbwgvyioflmrp
+kqzxdjnujwcsthbmgvyipilarp
+pqzxdenujwcsthbmgvyieflark
+sqzxdenujtcsthbmgiyioflarp
+kqzxdznujwcsthbmgvzioflajp
+kqzxdrnujqcsthbmgvyiofvarp
+gqzxdenujwcsthemgvlioflarp
+kqzxdenujjcsthbmgvuiofljrp
+kqzsdenujmcsthbmggyioflarp
+kqzxienujwcsthbmgvaioflaip
+kqzxdwnujwcstfkmgvyioflarp
+kqzqdenujwcithbmzvyioflarp
+kqzxdedpjwcsthbmgvyiofbarp
+kqzxdeaujwcbtdbmgvyioflarp
+kqzewenyjwcsthbmgvyioflarp
+kqzxddnujwcsthbmgyyiofrarp
+kqzxdtnujwcsthbmgvyiodlard
+kqzxdefujwcsthbmgvyiffwarp
+xczxdenujwcsthbmgvyooflarp
+kuzxdenujucsthbmgvykoflarp
+kqzxtenujwcwthbmgvyioplarp
+kqzxdencllcsthbmgvyioflarp";
+            string[] splits = input.Split('\n');
+            for (int i = 0; i < splits.Length; i++)
+            {
+                string str1 = splits[i].Trim();
+                for (int j = i+1; j < splits.Length; j++)
+                {
+                    string str2 = splits[j].Trim();
+                    int diffs = 0;
+                    for (int k = 0; k<str1.Length; k++)
+                    {
+                        if (str1[k] != str2[k])
+                        {
+                            diffs++;
+                        }
+                    }
+                    if (diffs == 1)
+                    {
+                        Console.WriteLine(str1);
+                        Console.WriteLine(str2);
+                    }
+                }
+
+            }
+
+            Console.ReadLine();
+        }
+        
+
+    }
+}
