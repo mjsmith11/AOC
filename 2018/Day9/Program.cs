@@ -12,7 +12,7 @@ namespace ConsoleApp1
         public static int lastMarble = 71184 * 100;
         static void Main(string[] args)
         {
-            List<int> scores = new List<int>();
+            List<long> scores = new List<long>();
             for (int i = 0; i <= players; i++)
             {
                 scores.Add(0);
@@ -24,10 +24,6 @@ namespace ConsoleApp1
             int current = 0;
             while (nextMarble <= lastMarble)
             {
-                if(nextMarble % 1000 == 0)
-                {
-                    Console.WriteLine(nextMarble);
-                }
                 if (nextMarble % 23 == 0)
                 {
                     scores[turn] += nextMarble;
@@ -72,7 +68,7 @@ namespace ConsoleApp1
         public static int moveCounterClockwise(List<int> list, int current)
         {
             current--;
-            if(current < 0)
+            if (current < 0)
             {
                 current = list.Count() - 1;
             }
