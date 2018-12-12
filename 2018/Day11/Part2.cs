@@ -41,9 +41,9 @@ namespace ConsoleApp1
                     for (int y = 1; y <= (300-size+1); y++)
                     {
                         int total = 0;
-                        for(int i = 0; i<size-1; i++)
+                        for(int i = 0; i<=size-1; i++)
                         {
-                            for(int j = 0; j<size-1; j++)
+                            for(int j = 0; j<=size-1; j++)
                             {
                                 total += cells[x + i, y + j];
                             }
@@ -60,7 +60,7 @@ namespace ConsoleApp1
                     }
                 }
             }
-            Console.WriteLine(maxX + "," + maxY+","+(maxSize-1));
+            Console.WriteLine(maxX + "," + maxY+","+maxSize);
             Console.ReadLine();
         }
 
