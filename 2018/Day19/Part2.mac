@@ -1,0 +1,12 @@
+ // Based on the disassembled code, I determined that it runs operations
+ // that result in 10551408 stored in a register. Then it runs an inefficient
+ // algorithm to sum all of the factors of 10551408
+Part2
+	set sum = 0
+	for I=1:1:10551408 {
+		if (10551408#I = 0) {
+			set sum = sum + I	
+		}	
+	}
+	write sum
+	quit
