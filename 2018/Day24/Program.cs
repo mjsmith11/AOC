@@ -152,7 +152,7 @@ namespace ConsoleApp1
 	}
 	public class Group
 	{
-		public static int boost = 42;
+		public static int boost = 43;
 		public int id;
 		public string type;
 		public int units;
