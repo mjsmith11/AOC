@@ -1,1 +1,4 @@
 My goal for 2019 is to write solutions using at least 10 different languages.
+Day 1 : MS Excel
+Day 2 : C
+Day 3 : Rust
