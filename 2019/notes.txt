@@ -4,3 +4,4 @@ Day 2 : C
 Day 3 : Rust
 Day 4 : Scala
 Day 5 : CoffeeScript
+Day 6 : TypeScript
