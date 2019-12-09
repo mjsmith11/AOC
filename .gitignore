@@ -399,3 +399,6 @@ OpenCover/
 2019/Day04/target/streams/runtime/managedClasspath/_global/streams/export
 2019/Day04/target/streams/runtime/unmanagedClasspath/_global/streams/export
 2019/Day04/target/streams/runtime/unmanagedJars/_global/streams/export
+2019/Day08/Day08/bin/*
+2019/Day08/Day08/obj/*
+
