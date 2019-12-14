@@ -1,0 +1,96 @@
+Part2 
+	set oreneeded = 0
+	// I did a manual binary search to pick this starting point
+	// If it ran a while with no output, fuelUnits became my new lower bound
+	// If it completed right away with one less than the starting point (due to the -2 in the right statement), fuelUnits became my new upper bound
+	set fuelUnits = 3848632 
+	while(oreneeded <= 1000000000000) {
+		kill (oreneeded,fuelUnits)
+		set oreneeded = $$calculateOre(fuelUnits)
+		set fuelUnits = fuelUnits + 1	
+	}
+	write fuelUnits - 2 // subtract 1 to undo the loop last loop update, and subtract another 1 because the last loop calculated something > 1 trillion (the first one)
+	quit
+Part1
+	kill
+	write $$calculateOre(1)
+	quit
+
+calculateOre(fuelToMake)
+	set file = ##class(%File).%New("C:\temp\day14.txt")
+	set sc = file.Open("R")
+	s line = 0
+	while ('file.AtEnd) {
+		s line = line + 1
+		if (line=61) { quit } // a hack because the parsing had an issue
+		set str = file.ReadLine()
+		set outputstr = $piece(str, " => ", 2)
+		set output = ##class(User.Chemical).%New()
+		set output.Amount = +$piece(outputstr," ",1)
+		set output.Name = $piece(outputstr," ",2)
+		set reaction = ##class(User.Reaction).%New()
+		set reaction.Output = output
+		set inputstr = $piece(str, " => ", 1)
+		for i=1:1:$length(inputstr,", ") {
+			set chemstr = $piece(inputstr,", ",i)
+			set chem = ##class(User.Chemical).%New()
+			set chem.Amount = +$piece(chemstr," ",1)
+			set chem.Name = $piece(chemstr," ",2)
+			do reaction.Input.Insert(chem)
+		}
+		set reactions(reaction.Output.Name) = reaction
+	}
+	do file.Close()
+
+	set need("FUEL") =  fuelToMake
+	while ('$$DownToOre(.need)){
+		set neededChem = $order(need(""))
+		while(neededChem '= "")
+		{	
+			if (neededChem = "ORE") {
+				set neededChem = $order(need(neededChem))
+				continue
+			}
+			set neededAmt = need(neededChem)
+			if (neededAmt = 0) {
+				set neededChem = $order(need(neededChem))
+				continue
+			}
+			set haveAmt = $get(have(neededChem), 0) // if we have this, we'll need less
+			if (haveAmt >= neededAmt) {
+				set have(neededChem) = haveAmt - neededAmt	
+				kill need(neededChem)
+				set neededChem = $order(need(neededChem))
+				continue
+			} else {
+				set neededAmt = neededAmt - haveAmt
+				set have(neededChem) = 0	
+			}
+			
+			// find the reaction that makes this 
+			set currentReaction = reactions(neededChem)
+			
+			//figure out how many times we will run this reaction
+			set timesToRun = neededAmt \ currentReaction.Output.Amount
+			if (neededAmt # currentReaction.Output.Amount) {
+				set timesToRun = timesToRun + 1
+				set have(neededChem) = $get(have(neededChem)) + (timesToRun * currentReaction.Output.Amount) - neededAmt
+			}
+			
+			//remove this needs and add needs for the reaction we cound
+			kill need(neededChem)
+			for i=1:1:currentReaction.Input.Count() {
+				set inputNeed = currentReaction.Input.GetAt(i)
+				set need(inputNeed.Name) = $get(need(inputNeed.Name),0) + (timesToRun * inputNeed.Amount)	
+			}
+			set neededChem = $order(need(neededChem))
+		}
+	}
+	return (need("ORE"))
+DownToOre(needArr)
+	set need = $order(needArr(""))
+	while(need '= "") {
+		if (need'="ORE" && needArr(need)'=0) { return 0 }
+		set need = $order(needArr(need))	
+	}
+	return 1
