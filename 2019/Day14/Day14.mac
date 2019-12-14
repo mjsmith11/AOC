@@ -1,19 +1,25 @@
-Part2 
-	set oreneeded = 0
-	// I did a manual binary search to pick this starting point
-	// If it ran a while with no output, fuelUnits became my new lower bound
-	// If it completed right away with one less than the starting point (due to the -2 in the right statement), fuelUnits became my new upper bound
-	set fuelUnits = 3848632 
-	while(oreneeded <= 1000000000000) {
-		kill (oreneeded,fuelUnits)
-		set oreneeded = $$calculateOre(fuelUnits)
-		set fuelUnits = fuelUnits + 1	
+Part2
+	kill
+	set lowerBound = 0
+	set upperBound = 5000000 // arbitrary but high enough to feel good that it's more than the answer
+	set trillion = 1000000000000
+	while (lowerBound < upperBound) {
+		kill (lowerBound,upperBound,trillion)
+		set middle = (lowerBound + upperBound) \ 2
+		set oreNeededMiddle = $$calculateOre(middle)
+		kill (lowerBound,upperBound,trillion,middle,oreNeededMiddle)
+		set oreNeededPlus1 = $$calculateOre(middle + 1)
+		if ((oreNeededMiddle <= trillion) && (oreNeededPlus1 > trillion)) {
+			write "Part 2: "_middle
+			quit	
+		}
+		if (oreNeededMiddle > trillion) { set upperBound = middle }
+		else { set lowerBound = middle }
 	}
-	write fuelUnits - 2 // subtract 1 to undo the loop last loop update, and subtract another 1 because the last loop calculated something > 1 trillion (the first one)
 	quit
 Part1
 	kill
-	write $$calculateOre(1)
+	write "Part 1: "_$$calculateOre(1)
 	quit
 
 calculateOre(fuelToMake)
