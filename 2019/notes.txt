@@ -16,3 +16,5 @@ Day 14: Intersystems Caché ObjectScript
 Day 15: C#
 Day 16: Dart
 Day 17: C#
+
+Day 19: C#
