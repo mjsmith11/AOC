@@ -52,7 +52,7 @@ namespace Day19
                     }
                 }
             }
-            Console.WriteLine("Build Done");
+            //Console.WriteLine("Build Done");
             // look for a block
             int searchSize = 100;
             bool found = false;
@@ -71,7 +71,7 @@ namespace Day19
                         }
                         if (!missed) { 
                             //Console.WriteLine("("+x+","+y+")"); 
-                            Console.WriteLine("Part 2: " + (1000*x + y));
+                            Console.WriteLine("Part 2: " + (10000*x + y));
                             found = true;
                             break;
                         }
