@@ -20,3 +20,4 @@ Day 18: Python
 Day 19: C#
 Day 20: Ruby
 Day 21: C#
+Day 22: Java and Python
