@@ -49,9 +49,24 @@ public class Day22 {
         }
         a = a.mod(MOD);
         b = b.mod(MOD);
-        System.out.println(a.toString(10));
-        System.out.println(b.toString(10));
         
+        BigInteger inv_a = a.modPow(MOD.subtract(BigInteger.valueOf(2)),MOD);
+        BigInteger inv_b = b.multiply(BigInteger.valueOf(-1)).multiply(inv_a).mod(MOD);
+
+        BigInteger[][] M = new BigInteger[2][2];
+        M[0][0] = inv_a;
+        M[1][0] = BigInteger.valueOf(0);
+        M[0][1] = inv_b;
+        M[1][1] = BigInteger.valueOf(1);
+        
+        BigInteger[][] Mexp = mat_pow(M, REP, MOD);
+        
+        BigInteger[][] v = new BigInteger[2][1];
+        
+        v[0][0] = BigInteger.valueOf(2020);
+        v[1][0] = BigInteger.valueOf(1);
+        
+        System.out.println("Part 2: " + mat_mult(Mexp, v, MOD)[0][0]);
     }
 
     
@@ -95,5 +110,41 @@ public class Day22 {
             newDeck.set(pointer, deck.get(i));
         }
         return newDeck;
+    }
+    public static BigInteger[][] mat_mult(BigInteger[][] A, BigInteger[][] B, BigInteger MOD)
+    {
+        int N = A.length;
+        int M = B[0].length;
+        
+        int L = A[0].length;
+        BigInteger[][] C = new BigInteger[N][M];
+        
+        for(int i=0; i<N; i++) {
+            for(int j = 0; j<M; j++) {
+                BigInteger acc = BigInteger.valueOf(0);
+                for(int k=0; k<L; k++) {
+                    acc = acc.add(A[i][k].multiply(B[k][j]));
+                }
+                acc = acc.mod(MOD);
+                C[i][j] = acc;
+            }
+        }
+        return C;
+    }
+
+    public static BigInteger[][] mat_pow(BigInteger[][] A, BigInteger exp, BigInteger mod) {
+        BigInteger[][] res = new BigInteger[2][2];
+        res[0][0] = BigInteger.valueOf(1);
+        res[1][0] = BigInteger.valueOf(0);
+        res[0][1] = BigInteger.valueOf(0);
+        res[1][1] = BigInteger.valueOf(1);
+        while (exp.compareTo(BigInteger.valueOf(0)) == 1) {
+            if (exp.mod(BigInteger.valueOf(2)).compareTo(BigInteger.valueOf(1)) == 0) {
+                res = mat_mult(res, A, mod);
+            }
+            A = mat_mult(A, A, mod);
+            exp = exp.divide(BigInteger.valueOf(2));
+        }
+        return res;
     }
 }
