@@ -27,7 +27,7 @@ public class Day22 {
             }
         }
         // part 2 - attempting to collapse all shuffles into one operation
-        // values a and b used by accompanying python script
+        // Based on other solutions from people that know how to do modular arithmetic
         BigInteger MOD  = new BigInteger("119315717514047");
         BigInteger REP  = new BigInteger("101741582076661");
         
