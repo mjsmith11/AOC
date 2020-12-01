@@ -10,6 +10,10 @@ namespace Day01
             Console.WriteLine("Part 1: " + part1());
             Console.WriteLine("Part 2: " + part2());
 
+            SortedList l = getInputList();
+            Console.WriteLine("Recursive Part 1: " + findProduct(l,2020,1,2));
+            Console.WriteLine("Recursive Part 2: " + findProduct(l,2020,1,3));
+            
         }
 
         // searches the input for two elements whose sum is 2020 and returns their product
@@ -62,6 +66,47 @@ namespace Day01
                 }   
             }
             return -1;
+        }
+
+        // SECOND SOLUTION
+        // ----------------
+        // recursive single solution for parts 1 and 2
+        // SortedList - the puzzle input
+        // desiredSum - the total desired sum (2020 in the problem description)
+        // currentProduct - the product of the currently selected values.  Should be passed as 1 at the beginning.
+        // numElements - the number of elements to use to reach the sum
+        static int findProduct(SortedList list, int desiredSum, int currentProduct, int numElements) {
+            for (int i=0; i<list.Count; i++) {
+                int num = (int)list.GetKey(i);
+                // base case
+                if (numElements==2) {
+                    int pair = desiredSum - num;
+                    if (list.ContainsKey(pair)) {
+                        return currentProduct*num*pair;
+                    }
+                } else {
+                    int lowerProduct = findProduct(list, desiredSum-num, currentProduct*num, numElements-1);
+                    if (lowerProduct != -1) {
+                        return currentProduct*lowerProduct;
+                    }
+                }
+            }
+            return -1;
+        }
+
+        // returns the input as a sorted list
+        static SortedList getInputList() {
+
+            string input = getInput();
+            string[] lines = input.Split('\n');
+            SortedList list = new SortedList();
+
+            // add all the data to the list
+            for(int i=0; i<lines.Length; i++) {
+                int num = int.Parse(lines[i]);
+                list.Add(num,0);
+            }
+            return list;
         }
 
         static string getInput() {
