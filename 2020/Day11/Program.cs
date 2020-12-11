@@ -7,6 +7,7 @@ namespace Day11
         static void Main(string[] args)
         {
             Console.WriteLine("Part 1: " + part1());
+            Console.WriteLine("Part 2: " + part2());
         }
 
         static int part1() {
@@ -93,8 +94,80 @@ namespace Day11
             return occupied;
         }
 
+        static int part2() {
+            string[] newmap =getInput();
+            string[] current = new string[1];
+            int occupied = 0;
+            while(!newmap.SequenceEqual(current)) {
+                current = newmap;
+                newmap = new string[current.Length];
+                occupied = 0;
 
+                //build the new map
+                for(int y=0; y<current.Length; y++) {
+                    newmap[y] = "";
+                    for(int x=0; x<current[y].Length; x++) {
+                        char newval = ' ';
+                        if(current[y][x] == '.'){
+                            newval = '.';
+                        } else {
+                            //count occupied seats around us
+                            int adjOccupied = 0;
+                            
+                            // up
+                            if (look(current,x,y,-1,-1)) { adjOccupied++; }
+                            if (look(current,x,y,0,-1)) { adjOccupied++; }
+                            if (look(current,x,y,1,-1)) { adjOccupied++; }
 
+                            // down
+                            if (look(current,x,y,-1,1)) { adjOccupied++; }
+                            if (look(current,x,y,0,1)) { adjOccupied++; }
+                            if (look(current,x,y,1,1)) { adjOccupied++; }
+
+                            // left
+                            if (look(current,x,y,-1,0)) { adjOccupied++; }
+
+                            // right
+                            if (look(current,x,y,1,0)) { adjOccupied++; }
+
+                            newval = current[y][x];
+                            if(newval == 'L' && adjOccupied==0) {
+                                newval = '#';
+                            } else if (newval == '#' && adjOccupied>=5) {
+                                newval = 'L';
+                            }
+                        }
+                        newmap[y] += newval;
+                        if (newval == '#') { occupied++;}
+                    }
+                }
+
+            }
+            
+            return occupied;
+        }
+
+        // for part to look in a direction determined by xadj and yadj.  Return indicates if an occupied chair was found
+        static bool look(string[] map, int startx, int starty, int xadj, int yadj) {
+            int x = startx;
+            int y = starty;
+            while (true) {
+                // move
+                x += xadj;
+                y += yadj;
+
+                // see if we're out of bounds
+                if (x<0) { return false; }
+                if (y<0) { return false; }
+                if (x>(map[0].Length - 1)) { return false; }
+                if (y>(map.Length - 1)) { return false; }
+
+                //check the new spot
+                if (map[y][x] == 'L') { return false; }
+                if (map[y][x] == '#') { return true; }
+                // must be floor so keep looping
+            }
+        }
 
         static string[] getInput() {
             string input = @"LLLLLLLLLLLLLL.LLLLLLLLLLLLLLL.LLLLLLLLL.LLLLLLL.LLLLLLL.LLLLLL.LLLLLLLL.LLLLL.LLLLLLLL..LLLLLLLLL
