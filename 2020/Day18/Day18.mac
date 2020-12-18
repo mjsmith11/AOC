@@ -1,0 +1,22 @@
+Day18
+	write "Part 1: "_ $$part1() , !
+	
+	quit
+
+part1()
+	set file = ##class(%File).%New( "/home/vagrant/input.txt" )
+    set sc = file.Open( "R" ) 
+    if 'sc quit -1
+    
+    set sum = 0
+    while 'file.AtEnd {
+        set str=file.ReadLine() 
+        if (str'?." ") {
+	    	set str = "set result = "_str
+	    	xecute str
+	    	set sum = sum + result   
+        }
+    }
+    do file.Close()
+    
+    return sum
