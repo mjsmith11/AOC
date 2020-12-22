@@ -70,7 +70,7 @@ namespace Day22
                 deck2.Enqueue(int.Parse(card));
             }
 
-            recursiveGame(deck1,deck2,0);
+            recursiveGame(deck1,deck2);
 
             int score = 0;
             int currentMultiplier = deck1.Count>0 ? deck1.Count : deck2.Count;
@@ -88,8 +88,7 @@ namespace Day22
             return score;
         }
 
-        static int recursiveGame(Queue<int> deck1, Queue<int> deck2, int j) {
-            Console.WriteLine("Recursion Level " + j);
+        static int recursiveGame(Queue<int> deck1, Queue<int> deck2) {
             List<Queue<int>> deck1History = new List<Queue<int>>();
             List<Queue<int>> deck2History = new List<Queue<int>>();
             
@@ -106,7 +105,7 @@ namespace Day22
                 int roundWinner = 0;
                 if (deck1.Count >= card1 && deck2.Count>=card2) {
                     // recursive combat!
-                    roundWinner = recursiveGame(new Queue<int>(deck1), new Queue<int>(deck2),j+1);
+                    roundWinner = recursiveGame(makeSubqueue(deck1,card1), makeSubqueue(deck2,card2));
                 } else {
                     if (card1>card2) {
                         roundWinner = 1;
@@ -135,6 +134,15 @@ namespace Day22
                 if (myQ1.Dequeue() != myQ2.Dequeue()) { return false;}
             }
             return true;
+        }
+
+        static Queue<int> makeSubqueue(Queue<int> q, int num) {
+            Queue<int> copyofold = new Queue<int>(q);
+            Queue<int> newq = new Queue<int>();
+            for(int i=0; i<num; i++) {
+                newq.Enqueue(copyofold.Dequeue());
+            }
+            return newq;
         }
 
         static string[] getPlayer1() {
