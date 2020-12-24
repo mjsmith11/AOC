@@ -7,9 +7,8 @@ namespace Day23
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
             Console.WriteLine("Part 1: " + part1("963275481"));
-            Console.WriteLine("Part 2: " + part2("389125467"));
+            Console.WriteLine("Part 2: " + part2("963275481"));
         }
 
         static string part1(string input) {
@@ -72,62 +71,68 @@ namespace Day23
         }
 
         static long part2(string input) {
-            List<int> cups = new List<int>();
+            LinkedList<int> cups = new LinkedList<int>();
+            Dictionary<int,LinkedListNode<int>> lookup = new Dictionary<int,LinkedListNode<int>>();
             for(int i=0; i<input.Length; i++) {
-                cups.Add(int.Parse(input.Substring(i,1)));
+                cups.AddLast(int.Parse(input.Substring(i,1)));
+                lookup[int.Parse(input.Substring(i,1))] = cups.Last;
             }
             for(int i=10; i<=1000000; i++) {
-                cups.Add(i);
-            }
-            int current = 0;
-            for(int i=0; i<10000000; i++) {
-                Console.WriteLine(i);
-                int currentLabel = cups[current];
+                cups.AddLast(i);
+                lookup[i] = cups.Last;
 
-                // pick up 3 cups
-                int myIndex = getNextIndex2(current);
-                // take the cup at myIndex 3 times b/c when you remove it, everything shifts up
-                int myCup1 = cups[myIndex];
-                cups.RemoveAt(myIndex);
-                if(myIndex == 999999) { myIndex = 0; } //check if we need to wrap.  There are now 999999 cups
-                int myCup2 = cups[myIndex];
-                cups.RemoveAt(myIndex);
-                if(myIndex == 999998) { myIndex = 0; } //check if we need to wrap.  There are now 999998 cups
-                int myCup3 = cups[myIndex];
-                cups.RemoveAt(myIndex);
+            }
+            LinkedListNode<int> current = cups.First;
+            for(int i=0; i<10000000; i++) {
+                int currentLabel = current.Value;
+
+                LinkedListNode<int> cupNode1 = getNextNode(cups,current);
+                LinkedListNode<int> cupNode2 = getNextNode(cups,cupNode1);
+                LinkedListNode<int> cupNode3 = getNextNode(cups,cupNode2);
+
+                int myCup1 = cupNode1.Value;
+                cups.Remove(cupNode1);
+
+                int myCup2 = cupNode2.Value;
+                cups.Remove(cupNode2);
+
+                int myCup3 =cupNode3.Value;
+                cups.Remove(cupNode3);
 
                 // pick destination
-                int destination = -1;
                 int desiredLabel = currentLabel - 1;
                 if (desiredLabel<1) {desiredLabel += 1000000; }
-                while (destination == -1) {
-                    destination = cups.IndexOf(desiredLabel);
+                while (myCup1 == desiredLabel || myCup2 == desiredLabel || myCup3 == desiredLabel) {
                     desiredLabel--;
                     if (desiredLabel<1) {desiredLabel += 1000000; }
                 }
+                LinkedListNode<int> destination = lookup[desiredLabel];
 
-                cups.Insert(destination + 1, myCup1);
-                cups.Insert(destination + 2, myCup2);
-                cups.Insert(destination + 3, myCup3);
+                cups.AddAfter(destination,cupNode1);
+                cups.AddAfter(cupNode1,cupNode2);
+                cups.AddAfter(cupNode2,cupNode3);
 
-                // find the current cup again in case it moved
-                current = cups.IndexOf(currentLabel);
                 //pick the new current
-                current = getNextIndex2(current);
+                current = getNextNode(cups,current);
             }
             
             //find 1
-            int index = cups.IndexOf(1);
-            int next1 = getNextIndex2(index);
-            int next2 = getNextIndex2(next1);
+            LinkedListNode<int> one = cups.Find(1);
+            LinkedListNode<int> next1 = one.Next;
+            LinkedListNode<int> next2 = next1.Next;
 
-            return (long)cups[next1] * (long)cups[next2];
+            return (long)next1.Value * (long)next2.Value;
         }
 
         static int getNextIndex2(int currentIndex) {
             currentIndex++;
             if (currentIndex>999999) {currentIndex -= 1000000; }
             return currentIndex;
+        }
+        static LinkedListNode<int> getNextNode(LinkedList<int> list, LinkedListNode<int> node) {
+            LinkedListNode<int> next = node.Next;
+            if (next == null) { next = list.First; }
+            return next;
         }
     }
 }
