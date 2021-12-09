@@ -2,8 +2,6 @@
 Console.WriteLine("Part 1: " + part1());
 Console.WriteLine("Part 2: " + part2());
 
-
-
 static int part1() {
     string[] input = getInput();
     int sizex=input[0].Trim().Length;
@@ -45,7 +43,6 @@ static int part1() {
 
     return riskSum;
 }
-
 
 static int part2() {
     string[] input = getInput();
@@ -182,24 +179,7 @@ static int calcBasinSize(int[,] map, int sizex, int sizey, Point start) {
         }
     }
 
-   /* for(int y=0; y<sizey; y++) {
-        for (int x=0; x<sizex; x++) {
-            Console.Write(basin[x,y]?"y":"n");
-        }
-        Console.WriteLine("");
-    }
-    
-    Console.WriteLine(size);*/
     return size;
-}
-
-static string[] getTestInput() {
-    string raw = @"2199943210
-3987894921
-9856789892
-8767896789
-9899965678";
-    return raw.Split("\n");
 }
 
 static string[] getInput() {
