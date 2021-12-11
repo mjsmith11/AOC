@@ -36,13 +36,6 @@ namespace Day11
 
                 //reset
                 int newFlashes = countFlashes(grid,true);
-                /*for(int y=0; y<10; y++) {
-                    for(int x=0;x<10; x++){
-                        Console.Write(grid[x,y].energy);
-                    }
-                    Console.WriteLine();
-                }
-                Console.WriteLine((round+1) + " : " + newFlashes);*/
                 totalFlashes += newFlashes;
             }
             return totalFlashes;
@@ -76,13 +69,6 @@ namespace Day11
                 if (newFlashes==100){
                     return (round+1);
                 }
-                /*for(int y=0; y<10; y++) {
-                    for(int x=0;x<10; x++){
-                        Console.Write(grid[x,y].energy);
-                    }
-                    Console.WriteLine();
-                }
-                Console.WriteLine((round+1) + " : " + newFlashes);*/
                 totalFlashes += newFlashes;
             }
             return -1;
