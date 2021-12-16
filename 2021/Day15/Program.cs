@@ -1,7 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
+long start = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 Console.WriteLine("Part 1 : " + solve(getGrid()));
+long part1 = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+Console.WriteLine(part1-start + "ms");
 Console.WriteLine("WARNING: Part 2 takes a few minutes because I used Dijkstra and should have used A*");
 Console.WriteLine("Part 2 : " + solve(assemble()));
+long end = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+Console.WriteLine(end-part1 + "ms");
 
 
 // Based on Dijkstra's but should probably be A*
