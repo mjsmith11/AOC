@@ -8,7 +8,7 @@ static string getEnhancement() {
 }
 
 static int solve(int iterations) {
-    int gridSize = 1000;
+    int gridSize = 300;
     string enhancement = getEnhancement();
     char[,] grid = getImage();
     for(int i=0; i<iterations; i++) {
@@ -59,8 +59,8 @@ static int binToInt(string bin) {
 }
 
 static char[,] getImage()  {
-    int gridSize = 1000;
-    int start = 400;
+    int gridSize = 300;
+    int start = 100;
     string image = @".#..#####.#...##..#.###.#...##.###....###.#.#.##.###..###..#..#.###.###..##.#...#..#..#.....#...###.
 ##.###.######..##..##.#.#.##.#..#...#..#....#.###........###.###..####..#....#..##.....########.###.
 #.##.##.#...##.##.......##..#.######.###...##.#####..##...#..###.###.###.##..#...#.#...#..#...#..#.#
