@@ -51,20 +51,25 @@ static long part2() {
             one = getOne(entry.Key);
             two = getTwo(entry.Key);
             foreach(int r1 in rollPossibilites) {
-                foreach(int r2 in rollPossibilites) {
-                    Player newOne = one.newPlayerMove(r1);
-                    Player newTwo = two.newPlayerMove(r2);
-
-                    if(newOne.points>=21) {
-                        p1Wins += entry.Value;
-                    } else if (newTwo.points>=21) {
-                        p2Wins += entry.Value;
-                    } else {
-                        int id = gameToInt(newOne,newTwo);
-                        if (newGameStates.ContainsKey(id)) {
-                            newGameStates[id] += entry.Value;
+                Player newOne = one.newPlayerMove(r1);
+                if(newOne.points>=21) {
+                    // p1 won.  It doesn't matter what p2 does
+                    p1Wins += entry.Value;
+                } else {
+                    // p1 did not win.  It does matter what p2 does
+                    foreach(int r2 in rollPossibilites) {
+                        Player newTwo = two.newPlayerMove(r2);
+                        if (newTwo.points>=21) {
+                            //p2 wins
+                            p2Wins += entry.Value;
                         } else {
-                            newGameStates[id] = entry.Value;
+                            // need to go another round.
+                            int id = gameToInt(newOne,newTwo);
+                            if (newGameStates.ContainsKey(id)) {
+                                newGameStates[id] += entry.Value;
+                            } else {
+                                newGameStates[id] = entry.Value;
+                            }
                         }
                     }
                 }
@@ -74,8 +79,6 @@ static long part2() {
         gameStates = newGameStates;
     }
 
-    // TOTAL HACK JOB!! I discoverd my p1Wins number was exactly 27 times too big on the sample and I have no idea why.
-    p1Wins /= 27;
 
     return p1Wins>p2Wins?p1Wins:p2Wins;
 
