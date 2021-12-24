@@ -1,0 +1,64 @@
+
+w=nextInput();
+x=z;
+x %=26; // this is a stack peek
+z /= 1; // the 1 changes.  If it's a 26, it's a stack pop
+x+=13// 13 changes
+if (x!=w) {
+    z*=26 + w + 6;// 6 changes.  This is a stack push of 6
+}
+
+
+
+
+
+{1, 1, 1, 1, 26,1, 1, 26,1, 26,26,26,26,26} // line 5 vals
+{13,15,15,11,-7,10,10,-5,15,-3,0, -5,-9,0} // line 6 vals if this is more than 9, it's an automatic push because it's added to the input
+{6, 7, 10,2, 15,8, 1, 10,5, 3, 5, 11,12,10} // line 8 vals
+
+
+
+push(I[0] + 6) // i[0] + 6
+
+push(i[1]+7) // i[0] + 6, i[1] + 7
+
+push(i[2]+10) // i[0] + 6, i[1] + 7, i[2] + 10
+
+push(i[3]+2) // i[0] + 6, i[1] + 7, i[2] + 10, i[3] + 2
+
+if (I[4] != pop() - 7) // i[0] + 6, i[1] + 7, i[2] + 10
+    push(I[4]+15)
+
+push (I[5]+8) // i[0] + 6, i[1] + 7, i[2] + 10, i[5] + 8
+
+push(i[6]+1) // i[0] + 6, i[1] + 7, i[2] + 10, i[5] + 8, i[6] + 1
+
+if (i[7] != pop() -5) //i[0] + 6, i[1] + 7, i[2] + 10, i[5] + 8
+    push(I[7]+10)
+
+push(i[8] + 5) i[0] + 6, i[1] + 7, i[2] + 10, i[5] + 8, i[8] + 5
+
+if (i[9] != pop() -3) i[0] + 6, i[1] + 7, i[2] + 10, i[5] + 8
+    push(I[9]+3)
+
+if (i[10] != pop()) i[0] + 6, i[1] + 7, i[2] + 10
+    push(I[10]+5)
+
+if (i[11] != pop() -5) i[0] + 6, i[1] + 7,
+    push(I[11]+11)
+
+if (i[12] != pop() -9) i[0] + 6
+    push(I[12]+12)
+
+if (i[13] != pop())
+    push(I[13]+10)
+
+
+// we want to avoid all of the actual conditional pops, so that the stack is left with 0, so
+i[4] = i[3] -5;
+i[7]=i[6]-4;
+i[9] = i[8]+2
+i[10] = i[5]+8
+i[11] = i[2]+5
+i[12] = i[1] -2
+i[13] = i[0] +6
