@@ -424,3 +424,5 @@ OpenCover/
 2019/Day23/obj/*
 2019/Day25/bin/*
 2019/Day25/obj/*
+.vscode/settings.json
+2022/Day01/a.out
