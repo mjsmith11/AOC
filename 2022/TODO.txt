@@ -1,0 +1,4 @@
+Move BUILD up a level
+Make vscode not show files red
+Run with bazel Run
+Link to bazel setup

@@ -425,4 +425,9 @@ OpenCover/
 2019/Day25/bin/*
 2019/Day25/obj/*
 .vscode/settings.json
-2022/Day01/a.out
+*.out
+.vscode/c_cpp_properties.json
+2022/bazel-2022
+2022/bazel-out
+2022/bazel-testlogs
+2022/bazel-bin
