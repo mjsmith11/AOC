@@ -431,3 +431,4 @@ OpenCover/
 2022/bazel-out
 2022/bazel-testlogs
 2022/bazel-bin
+2022/compile_commands.json

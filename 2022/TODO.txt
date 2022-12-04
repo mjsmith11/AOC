@@ -1,3 +1,2 @@
-Make vscode not show files red
-Run with bazel Run
-Link to bazel setup
+Run with bazel Run 
+Link to bazel setup + bazel-compdb writeup
