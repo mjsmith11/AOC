@@ -141,7 +141,7 @@ void Part1() {
     cout << "\n";
 }
 
-int Part2() {
+void Part2() {
     vector<stack<char>> myStacks = getStacks();
     for(string s : getInput()) {
         if (strcmp(s.c_str(), "") == 0) { continue; }
