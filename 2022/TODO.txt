@@ -1,2 +1,1 @@
-Run with bazel Run 
 Link to bazel setup + bazel-compdb writeup
