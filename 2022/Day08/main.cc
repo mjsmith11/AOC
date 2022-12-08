@@ -4,13 +4,8 @@
 #include <string>
 #include <fstream>
 #include <vector>
-#include <stdlib.h> 
-
-#include "absl/strings/str_split.h"
 
 using namespace std;
-
-int sum_lte_100k; // couldn't get a static member of the class to run right
 
 vector<string> getInput() {
     ifstream myfile ("Day08/input.txt");
