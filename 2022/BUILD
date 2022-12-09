@@ -45,3 +45,9 @@ cc_binary(
   deps = [],
   srcs = ["Day08/main.cc"],
 )
+
+cc_binary(
+  name = "Day09",
+  deps = ["@com_google_absl//absl/strings"],
+  srcs = ["Day09/main.cc"],
+)
