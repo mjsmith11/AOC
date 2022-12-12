@@ -63,3 +63,9 @@ cc_binary(
   deps = [],
   srcs = ["Day11/main.cc"],
 )
+
+cc_binary(
+  name = "Day12",
+  deps = [],
+  srcs = ["Day12/main.cc"],
+)
