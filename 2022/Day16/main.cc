@@ -12,8 +12,9 @@ using namespace std;
 
 map<string, int> cache;
 map<string, int> cache2;
+map<string, int> intNames;
 
-class CaveValve {
+/*class CaveValve {
     private:
         string name;
         bool isOpen;
@@ -57,6 +58,52 @@ class CaveValve {
             }
             cout << "\n";
         }
+};*/
+
+class CaveValve {
+    private:
+        int name;
+        bool isOpen;
+        int flow;
+        vector<int> neighbors;
+
+    public:
+        CaveValve(int myName, int myFlow, vector<int> myNeighbors) {
+            name = myName;
+            flow = myFlow;
+            neighbors = myNeighbors;
+            isOpen = false;
+        }
+
+        bool isValveOpen() {
+            return isOpen;
+        }
+
+        void openValve() {
+            isOpen = true;
+        }
+
+        void closeValve() {
+            isOpen = false;
+        }
+
+        int getFlow() {
+            return flow;
+        }
+
+        vector<int> getNeighbors() {
+            return neighbors;
+        }
+
+        void print() {
+            cout << name << " ";
+            cout << flow << " ";
+            cout << isOpen << " ";
+            for (int s : neighbors) {
+                cout << s << ", ";
+            }
+            cout << "\n";
+        }
 };
 
 vector<string> getInput() {
@@ -73,13 +120,24 @@ vector<string> getInput() {
 
 
 
-string getKey(string location, int minutes, int amt_to_release, map<string, CaveValve> valves, int other_players) {
-    string k = location+","+to_string(minutes)+","+to_string(amt_to_release)+","+to_string(other_players);
+/*string getKey(string location, int minutes, map<string, CaveValve> valves, int other_players) {
+    string k = location+","+to_string(minutes)+","+to_string(other_players);
     map<string, CaveValve>::iterator it;
     for (it = valves.begin(); it != valves.end(); it++)
     {
         if (it->second.getFlow()>0) {
             k = k + it->first + ":" + to_string(it->second.isValveOpen()) + ",";
+        }
+    }
+    return k;
+}*/
+
+string getKey(int location, int minutes, vector<CaveValve>& valves, int other_players) {
+    string k = to_string(location)+","+to_string(minutes)+","+to_string(other_players);
+    for (int i=0; i<valves.size(); i++)
+    {
+        if (valves[i].getFlow()>0) {
+            k = k + to_string(i)+ ":" + to_string(valves[i].isValveOpen()) + ",";
         }
     }
     return k;
@@ -95,28 +153,24 @@ string getKey2(string location, string elephantLocation, int minutes, int amt_to
     return k;
 }
 
-bool allFlowOpen(map<string, CaveValve> valves) {
-    map<string, CaveValve>::iterator it;
-    for (it = valves.begin(); it != valves.end(); it++)
+bool allFlowOpen(vector<CaveValve>& valves) {
+    for (int i=0; i<valves.size(); i++)
     {
-        if (it->second.getFlow() > 0 && !it->second.isValveOpen()) 
-        {
+        if (valves[i].getFlow()>0 && !valves[i].isValveOpen()) {
             return false;
         }
     }
     return true;
 }
-int maxAmtReleasable(string location, int minutes, int amt_to_release, map<string, CaveValve>& valves, int other_players) {
-    if (auto cache_hit = cache.find(getKey(location, minutes, amt_to_release, valves, other_players)); cache_hit != cache.end()) {
+/*int maxAmtReleasable(string location, int minutes map<string, CaveValve>& valves, int other_players) {
+    if (auto cache_hit = cache.find(getKey(location, minutes, valves, other_players)); cache_hit != cache.end()) {
         // cout << getKey(location, minutes, amt_to_release, valves) << "\n";
-        if (other_players>0) {
-            cout << "CACHE HIT " << other_players << " \n";
-        }
+        cout << "CACHE HIT " << other_players << " \n";
+
         return cache_hit->second;
     } else {
-        if (other_players>0) {
-            cout << "CACHE miss " << other_players << " \n";
-        }
+        cout << "CACHE miss " << other_players << " \n";
+
     }
     if (minutes == 0) {
         // cout << getKey(location, minutes, amt_to_release, valves, other_players) << "\n";
@@ -124,11 +178,11 @@ int maxAmtReleasable(string location, int minutes, int amt_to_release, map<strin
             return 0;
         } else {
             cout << "RECURSING PLAYER\n";
-            return maxAmtReleasable("AA",26,amt_to_release, valves, other_players-1);
+            return maxAmtReleasable("AA",26, valves, other_players-1);
         }
     }
     if (other_players==0 && allFlowOpen(valves)) {
-        cache[getKey(location, minutes, amt_to_release, valves, other_players)] = 0; // minutes*amt_to_release;
+        cache[getKey(location, minutes, valves, other_players)] = 0; // minutes*amt_to_release;
         // cout << getKey(location, minutes, amt_to_release, valves) << "\n";
         return 0; //minutes*amt_to_release;
     }
@@ -142,13 +196,13 @@ int maxAmtReleasable(string location, int minutes, int amt_to_release, map<strin
     
     for (string n : valves.at(location).getNeighbors()) {
         //cout << "Moving to " << n << "\n";
-        val = maxAmtReleasable(n, minutes-1, amt_to_release, valves, other_players);
+        val = maxAmtReleasable(n, minutes-1, valves, other_players);
         max = val>max?val:max;
     }
     if (!valves.at(location).isValveOpen() && valves.at(location).getFlow() >0) {
         //cout << "Opening valve " << location << "\n";
         valves.at(location).openValve();
-        val = (minutes-1) * valves.at(location).getFlow() + maxAmtReleasable(location, minutes - 1, amt_to_release + valves.at(location).getFlow(), valves, other_players);
+        val = (minutes-1) * valves.at(location).getFlow() + maxAmtReleasable(location, minutes - 1, valves, other_players);
         if (val>max) {
             max = val;
         }
@@ -156,7 +210,63 @@ int maxAmtReleasable(string location, int minutes, int amt_to_release, map<strin
         
     }
     // cout << "Returning " << max + amt_to_release << "\n";
-    cache[getKey(location, minutes, amt_to_release, valves, other_players)] = max;
+    cache[getKey(location, minutes, valves, other_players)] = max;
+    // cout << getKey(location, minutes, amt_to_release, valves) << "\n";
+    return max; //+ amt_to_release;
+}*/
+
+int maxAmtReleasable(int location, int minutes, vector<CaveValve>& valves, int other_players, int current_score) {
+    if (auto cache_hit = cache.find(getKey(location, minutes, valves, other_players)); cache_hit != cache.end()) {
+        // cout << getKey(location, minutes, amt_to_release, valves) << "\n";
+        // cout << "CACHE HIT " << other_players << " \n";
+
+        return cache_hit->second;
+    } else {
+        // cout << "CACHE miss " << other_players << " \n";
+
+    }
+    if (minutes == 0) {
+        // cout << getKey(location, minutes, amt_to_release, valves, other_players) << "\n";
+        if (other_players<=0 || current_score<1230) {
+            if (current_score > 1200) {
+                cout << "CURRENT SCORE " << current_score <<"\n";
+            }
+            return 0;
+        } else {
+            cout << "RECURSING PLAYER\n";
+            return maxAmtReleasable(intNames["AA"] ,26, valves, other_players-1, 0);
+        }
+    }
+    if (other_players==0 && allFlowOpen(valves)) {
+        cache[getKey(location, minutes, valves, other_players)] = 0; // minutes*amt_to_release;
+        // cout << getKey(location, minutes, amt_to_release, valves) << "\n";
+        return 0; //minutes*amt_to_release;
+    }
+    // best I can do with the rest of my minutes
+    int max = 0;
+    // stay put
+    int val;
+    // int val = maxAmtReleasable(location, minutes - 1, amt_to_release, valves);
+    // max = val>max?val:max;
+
+    
+    for (int n : valves[location].getNeighbors()) {
+        //cout << "Moving to " << n << "\n";
+        val = maxAmtReleasable(n, minutes-1, valves, other_players, current_score);
+        max = val>max?val:max;
+    }
+    if (!valves[location].isValveOpen() && valves[location].getFlow() >0) {
+        //cout << "Opening valve " << location << "\n";
+        valves[location].openValve();
+        val = (minutes-1) * valves[location].getFlow() + maxAmtReleasable(location, minutes - 1, valves, other_players, current_score + (minutes-1) * valves[location].getFlow());
+        if (val>max) {
+            max = val;
+        }
+        valves[location].closeValve();
+        
+    }
+    // cout << "Returning " << max + amt_to_release << "\n";
+    cache[getKey(location, minutes, valves, other_players)] = max;
     // cout << getKey(location, minutes, amt_to_release, valves) << "\n";
     return max; //+ amt_to_release;
 }
@@ -265,6 +375,33 @@ int maxAmtReleasable2(string location, string elephantLocation, int minutes, int
 }*/
 
 int Part1() {
+    int num = 0;
+    
+    for(string s : getInput()) {
+        if (strcmp("",s.c_str()) == 0) { continue; }
+        string name = static_cast<vector<string>>(absl::StrSplit(s,' '))[1];
+        intNames[name] = num;
+        num++;
+    }
+    vector<CaveValve> valves;
+    for(string s : getInput()) {
+        if (strcmp("",s.c_str()) == 0) { continue; }
+        string name = static_cast<vector<string>>(absl::StrSplit(s,' '))[1];
+        int namei = intNames[name];
+        string afterEqual = static_cast<vector<string>>(absl::StrSplit(s,'='))[1];
+        int flow = atoi(static_cast<vector<string>>(absl::StrSplit(afterEqual,';'))[0].c_str());
+        vector<string> vnstr = absl::StrSplit(s,"valves ");
+        vector<string> neighbors = absl::StrSplit(vnstr[1], ", ");
+        vector<int> neighborsi;
+        for(string n : neighbors) {
+            neighborsi.push_back(intNames[n]);
+        }
+        valves.push_back(CaveValve(namei, flow, neighborsi));
+    }
+    return maxAmtReleasable(intNames["AA"],26,valves,1,0);
+}
+
+/*int Part2() {
     map<string, CaveValve> valves;
     for(string s : getInput()) {
         if (strcmp("",s.c_str()) == 0) { continue; }
@@ -277,30 +414,14 @@ int Part1() {
         // v.print();
         valves.insert(pair<string, CaveValve>(name, CaveValve(name, flow, neighbors)));
     }
-    return maxAmtReleasable("AA",30,0,valves,0);
-}
+    return maxAmtReleasable("AA",26,valves,1);
 
-int Part2() {
-    map<string, CaveValve> valves;
-    for(string s : getInput()) {
-        if (strcmp("",s.c_str()) == 0) { continue; }
-        string name = static_cast<vector<string>>(absl::StrSplit(s,' '))[1];
-        string afterEqual = static_cast<vector<string>>(absl::StrSplit(s,'='))[1];
-        int flow = atoi(static_cast<vector<string>>(absl::StrSplit(afterEqual,';'))[0].c_str());
-        vector<string> vnstr = absl::StrSplit(s,"valves ");
-        vector<string> neighbors = absl::StrSplit(vnstr[1], ", ");
-        CaveValve v = CaveValve(name, flow, neighbors);
-        // v.print();
-        valves.insert(pair<string, CaveValve>(name, CaveValve(name, flow, neighbors)));
-    }
-    return maxAmtReleasable("AA",26,0,valves,1);
-
-}
+}*/
 // Driver Code
 int main()
 {
-    // std::cout << "Part 1 " << Part1() << "\n";
-    std::cout << "Part 2 " << Part2() << "\n";
+    std::cout << "Part 1 " << Part1() << "\n";
+    //std::cout << "Part 2 " << Part2() << "\n";
     
     return 0;
 }
