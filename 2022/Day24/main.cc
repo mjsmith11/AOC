@@ -76,12 +76,12 @@ int Part1() {
         }
     }
     int topWall = 0;
-    // int bottomWall = 36;
-    int bottomWall = 5;
+    int bottomWall = 36;
+    // int bottomWall = 5;
     int leftWall = 0;
-    int rightWall = 7;// 101;
+    int rightWall = 101; // 7
     int startX = 1;
-    int goalX = 6;// 100;
+    int goalX = 100; // 6
     unordered_set<pair<int,int>, pair_hash> expeditionLocations;
     expeditionLocations.insert(pair<int,int>(startX,0));
     for(int i=1; i<1000; i++) {
@@ -154,6 +154,21 @@ struct ExpeditionState {
     pair<int,int> location;
     bool reachedGoal;
     bool returnedToStart;
+
+    int toInt() {
+        int r = location.second;
+        r += location.first * 1000;
+        int w = 3;
+        if (reachedGoal) {
+            w--;
+        }
+        if (returnedToStart) {
+            w--;
+        }
+        r += w*1000000;
+        return r;
+    }
+
 };
 struct state_hash {
     inline std::size_t operator()(const ExpeditionState & v) const {
@@ -204,20 +219,21 @@ int Part2() {
         }
     }
     int topWall = 0;
-    // int bottomWall = 36;
-    int bottomWall = 5;
+    int bottomWall = 36;
+    // int bottomWall = 5;
     int leftWall = 0;
-    int rightWall = 7;// 101;
+    int rightWall = 101; // 7
     int startX = 1;
-    int goalX = 6;// 100;
-    unordered_set<ExpeditionState, state_hash> expeditionLocations;
+    int goalX = 100; // 6
+    vector<ExpeditionState> expeditionLocations;
     ExpeditionState start;
     start.location = pair<int,int>(startX,0);
     start.reachedGoal = false;
     start.returnedToStart = false;
-    expeditionLocations.insert(start);
+    expeditionLocations.push_back(start);
+    bool gotToEnd = false;
+    bool returned = false;
     for(int i=1; i<1000; i++) {
-        cout << i << "\n";
         // move blizzards
         blizzardLocations.clear();
         for(Blizzard& b : blizzards) {
@@ -237,15 +253,21 @@ int Part2() {
             }
             blizzardLocations.insert(b.location);
         }
-
+        unordered_set<int> visited;
         // move expedition
-        unordered_set<ExpeditionState, state_hash> newExpeditionLocations;
+        vector<ExpeditionState> newExpeditionLocations;
         for(ExpeditionState es : expeditionLocations) {
+            // don't need to see the same state twice
+            int num = es.toInt();
+            if(visited.find(num) != visited.end()) {
+                continue;
+            }
+            visited.insert(num);
             pair<int,int> e = es.location;
             // stay
             if (blizzardLocations.find(e) == blizzardLocations.end()) {
                 // don't need to check the state bools if we didn't move
-                newExpeditionLocations.insert(es);
+                newExpeditionLocations.push_back(es);
             }
             // down
             if (e.second<bottomWall-1 || (e.first == goalX && e.second==bottomWall-1)) {
@@ -255,18 +277,18 @@ int Part2() {
                     es1.location = e1;
                     es1.reachedGoal = (es.reachedGoal || (e1.first == goalX && e1.second==bottomWall));
                     es1.returnedToStart = (es.returnedToStart || (es.reachedGoal && e1.first == startX && e1.second==topWall)); 
-                    newExpeditionLocations.insert(es1);
+                    newExpeditionLocations.push_back(es1);
                 }
             }
             // up
-            if (e.second>topWall+1 || (e.first == goalX && e.second==topWall+1)) {
+            if (e.second>topWall+1 || (e.first == startX && e.second==topWall+1)) {
                 pair<int,int> e1(e.first, e.second - 1);
                 if (blizzardLocations.find(e1) == blizzardLocations.end()) {
                     ExpeditionState es1;
                     es1.location = e1;
                     es1.reachedGoal = (es.reachedGoal || (e1.first == goalX && e1.second==bottomWall));
                     es1.returnedToStart = (es.returnedToStart || (es.reachedGoal && e1.first == startX && e1.second==topWall)); 
-                    newExpeditionLocations.insert(es1);
+                    newExpeditionLocations.push_back(es1);
                 }
             }
             // left
@@ -277,7 +299,7 @@ int Part2() {
                     es1.location = e1;
                     es1.reachedGoal = (es.reachedGoal || (e1.first == goalX && e1.second==bottomWall));
                     es1.returnedToStart = (es.returnedToStart || (es.reachedGoal && e1.first == startX && e1.second==topWall)); 
-                    newExpeditionLocations.insert(es1);
+                    newExpeditionLocations.push_back(es1);
                 }
             }
             // right
@@ -288,18 +310,46 @@ int Part2() {
                     es1.location = e1;
                     es1.reachedGoal = (es.reachedGoal || (e1.first == goalX && e1.second==bottomWall));
                     es1.returnedToStart = (es.returnedToStart || (es.reachedGoal && e1.first == startX && e1.second==topWall)); 
-                    newExpeditionLocations.insert(es1);
+                    newExpeditionLocations.push_back(es1);
                 }
             }
         }
         expeditionLocations = newExpeditionLocations;
-        pair<int,int>pGoal(goalX,bottomWall);
-        ExpeditionState esGoal;
-        esGoal.location = pGoal;
-        esGoal.reachedGoal = true;
-        esGoal.returnedToStart = true;
-        if(expeditionLocations.find(esGoal) != expeditionLocations.end()) {
-            return i;
+        
+        // if an expedition reached a waypoint, we aren't going to get a better result from an expedition that reached later
+        if (!gotToEnd) {
+            vector<ExpeditionState> atEnd;
+            for(ExpeditionState es : expeditionLocations) {
+                if (es.reachedGoal) {
+                    atEnd.push_back(es);
+                    gotToEnd = true;
+                }
+            }
+            if (gotToEnd) {
+                expeditionLocations = atEnd;
+            }
+        } else {
+            if (!returned) {
+                vector<ExpeditionState> returnedStates;
+                for(ExpeditionState es : expeditionLocations) {
+                    if (es.returnedToStart) {
+                        returnedStates.push_back(es);
+                        returned = true;
+                    }
+                }
+                if (returned) {
+                    expeditionLocations = returnedStates;
+                }
+            }
+        }
+        
+        // see if an expedition has hit all the waypoints and reached the goal
+        for(ExpeditionState es : expeditionLocations) {
+            if(es.returnedToStart && es.reachedGoal) {
+                if (es.location.first ==goalX && es.location.second==bottomWall) {
+                    return i;
+                }
+            }
         }
     }
     return 2;
