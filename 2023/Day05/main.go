@@ -14,16 +14,16 @@ func main() {
 	fmt.Println("Part 1 ", part1())
 }
 
-func part1() int {
+func part1() int64 {
 	input := readInput()
-	mapping := make(map[int]int, len(input.seeds))
+	mapping := make(map[int64]int64, len(input.seeds))
 	for _, v := range input.seeds {
 		mapping[v] = v
 	}
 	for _, v := range input.rules {
 		mapping = doMap(mapping, v)
 	}
-	min := math.MaxInt32
+	min := int64(math.MaxInt64)
 	for _, v := range mapping {
 		if v < min {
 			min = v
@@ -41,17 +41,17 @@ func readInput() *input {
 	scanner := bufio.NewScanner(f)
 
 	// read seeds
-	mySeeds := make([]int, 0)
+	mySeeds := make([]int64, 0)
 	scanner.Scan()
 	seedStr := scanner.Text()
 	numsStr := strings.Split(seedStr, ": ")[1]
 	splitNumStr := strings.Split(numsStr, " ")
 	for _, n := range splitNumStr {
-		intN, err := strconv.Atoi(n)
+		int64N, err := strconv.ParseInt(n, 10, 64)
 		if err != nil {
 			panic(err)
 		}
-		mySeeds = append(mySeeds, intN)
+		mySeeds = append(mySeeds, int64N)
 	}
 
 	// eat the blank space after seeds
@@ -69,15 +69,15 @@ func readInput() *input {
 			thisRuleSet = make([]mappingRule, 0)
 		} else if unicode.IsNumber(rune(s[0])) {
 			parts := strings.Split(s, " ")
-			dest, err := strconv.Atoi(parts[0])
+			dest, err := strconv.ParseInt(parts[0], 10, 64)
 			if err != nil {
 				panic(err)
 			}
-			src, err := strconv.Atoi(parts[1])
+			src, err := strconv.ParseInt(parts[1], 10, 64)
 			if err != nil {
 				panic(err)
 			}
-			length, err := strconv.Atoi(parts[2])
+			length, err := strconv.ParseInt(parts[2], 10, 64)
 			if err != nil {
 				panic(err)
 			}
@@ -102,8 +102,8 @@ func readInput() *input {
 	}
 }
 
-func doMap(in map[int]int, rules mappingRuleset) map[int]int {
-	out := make(map[int]int, len(in))
+func doMap(in map[int64]int64, rules mappingRuleset) map[int64]int64 {
+	out := make(map[int64]int64, len(in))
 	for k, v := range in {
 		matched := false
 		for _, r := range rules {
@@ -122,12 +122,12 @@ func doMap(in map[int]int, rules mappingRuleset) map[int]int {
 }
 
 type input struct {
-	seeds []int
+	seeds []int64
 	rules []mappingRuleset
 }
 type mappingRule struct {
-	destinationStart int
-	sourceStart      int
-	windowLength     int
+	destinationStart int64
+	sourceStart      int64
+	windowLength     int64
 }
 type mappingRuleset []mappingRule
