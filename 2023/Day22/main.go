@@ -26,15 +26,12 @@ func part2() int {
 	for drop(masterS, dirs) {
 	}
 	total := 0
-	n := 0
 	for k := range dirs {
-		fmt.Println("Trying", n)
 		moved = make(map[int]int)
 		copyS := deepCopy(masterS, k)
 		for drop(copyS, dirs) {
 		}
 		total += len(moved)
-		n++
 	}
 	return total
 }
