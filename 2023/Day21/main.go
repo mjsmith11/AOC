@@ -21,7 +21,7 @@ func part1() int {
 	locs[start] = 0
 	for steps := 0; steps < 64; steps++ {
 		newLocs := make(map[[2]int]int, 1)
-		for k, _ := range locs {
+		for k := range locs {
 			if isOk(grid, k[1]+1, k[0]) {
 				newLocs[[2]int{k[0], k[1] + 1}] = 0
 			}
