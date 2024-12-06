@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	//fmt.Println("Part 1:", part1())
+	fmt.Println("Part 1:", part1())
 	fmt.Println("Part 2:", part2())
 }
 
@@ -73,14 +73,12 @@ func part1() int {
 }
 
 func part2() int {
-	//wg := &sync.WaitGroup{}
+	wg := &sync.WaitGroup{}
 	ans := 0
 	results := make(chan bool)
 	grid := readInput()
-	counter := 0
 	for y := 0; y < len(grid); y++ {
 		for x := 0; x < len(grid[0]); x++ {
-			fmt.Println(counter)
 			if grid[y][x] == '.' {
 				newGrid := make([][]rune, 0)
 				for iy := 0; iy < len(grid); iy++ {
@@ -94,23 +92,21 @@ func part2() int {
 					}
 					newGrid = append(newGrid, line)
 				}
-				if hasCycle(newGrid, results) {
-					ans++
-				}
-				// wg.Add(1)
-				// go func() {
-				// 	defer wg.Done()
-				// 	hasCycle(newGrid, results)
-				// }()
+				wg.Add(1)
+				go func() {
+					defer wg.Done()
+					hasCycle(newGrid, results)
+				}()
 			}
-			counter++
 		}
 	}
-	//go monitor(wg, results)
+	go monitor(wg, results)
 
-	// for v := range results {
-	// 	fmt.Println(v)
-	// }
+	for v := range results {
+		if v {
+			ans++
+		}
+	}
 	return ans
 }
 
@@ -122,13 +118,12 @@ func monitor(wg *sync.WaitGroup, ch chan bool) {
 func stateToString(x, y int, dir rune) string {
 	return fmt.Sprintf("%v,%v,%v", x, y, dir)
 }
-func hasCycle(grid [][]rune, c chan bool) bool {
+func hasCycle(grid [][]rune, c chan bool) {
 	seen := make(map[string]bool, 0)
 	dir := 'U'
 	x, y := findGuard(grid)
 	seen[stateToString(x, y, dir)] = true
 	for {
-		//fmt.Println("loop")
 		if dir == 'U' {
 			if y == 0 {
 				// off grid
@@ -141,8 +136,8 @@ func hasCycle(grid [][]rune, c chan bool) bool {
 				y--
 				state := stateToString(x, y, dir)
 				if _, ok := seen[state]; ok {
-					//c <- true
-					return true
+					c <- true
+					return
 				} else {
 					seen[state] = true
 				}
@@ -159,8 +154,8 @@ func hasCycle(grid [][]rune, c chan bool) bool {
 				x++
 				state := stateToString(x, y, dir)
 				if _, ok := seen[state]; ok {
-					//c <- true
-					return true
+					c <- true
+					return
 				} else {
 					seen[state] = true
 				}
@@ -177,8 +172,8 @@ func hasCycle(grid [][]rune, c chan bool) bool {
 				y++
 				state := stateToString(x, y, dir)
 				if _, ok := seen[state]; ok {
-					//c <- true
-					return true
+					c <- true
+					return
 				} else {
 					seen[state] = true
 				}
@@ -196,26 +191,15 @@ func hasCycle(grid [][]rune, c chan bool) bool {
 				x--
 				state := stateToString(x, y, dir)
 				if _, ok := seen[state]; ok {
-					//c <- true
-					return true
+					c <- true
+					return
 				} else {
 					seen[state] = true
 				}
 			}
 		}
 	}
-	return false
-	//c <- false
-}
-
-func dumpGrid(grid [][]rune) {
-	for y := 0; y < len(grid); y++ {
-		for x := 0; x < len(grid[0]); x++ {
-			fmt.Print(string(grid[y][x]))
-		}
-		fmt.Println()
-	}
-	fmt.Println()
+	c <- false
 }
 
 func countX(grid [][]rune) int {
