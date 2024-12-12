@@ -67,6 +67,7 @@ func explore(x, y int, grid [][]rune) {
 }
 
 func part2() int {
+	// idea is to count the corners and that will be the same as edges
 	grid := readInput()
 	used = make(map[string]bool, 0)
 	total := 0
