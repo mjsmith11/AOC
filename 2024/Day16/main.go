@@ -8,7 +8,6 @@ import (
 	"strings"
 )
 
-// 112376 too high
 var (
 	q       []*state
 	visited map[string]int
