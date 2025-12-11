@@ -18,6 +18,8 @@ type node struct {
 
 func part2() int {
 	inp := readInput()
+	// svr -> out while visiting fft and dac means
+	// svr -> fft -> dac -> out OR svr -> dac -> fft -> out
 	a1 := runDfs(inp, "svr", "fft", make(map[string]int, 0))
 	b1 := runDfs(inp, "fft", "dac", make(map[string]int, 0))
 	c1 := runDfs(inp, "dac", "out", make(map[string]int, 0))
